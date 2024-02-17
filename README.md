@@ -10,7 +10,7 @@ Additionally, we extend our services by incorporating advanced algorithms, inclu
 3.Utilizing web scraping techniques, a similar process is undertaken with dogs available for adoption on various adoption sites.
 4.Users receive personalized recommendations, encompassing the most suitable dog breeds, as well as information on dogs available for adoption that align with their preferences.
 
-## Our goal is to make the adoption process seamless and ensure that each user finds their ideal canine companion.
+### Our goal is to make the adoption process seamless and ensure that each user finds their ideal canine companion.
 
 
 
