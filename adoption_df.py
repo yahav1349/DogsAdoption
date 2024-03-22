@@ -14,18 +14,25 @@ warnings.simplefilter("ignore")
 class AdoptionDF():
     def __init__(self, name: str, initial: bool):
         if initial:
-            self.df = pd.read_csv(name)
+            # If there are new adoption dogs available, we'll need to generate a new dataset. 
+            # Otherwise, during the current run, we can simply read the CSV file and utilize 
+            # its vectors. This initial boolean variable is designed to optimize runtime.
+            
             self.translation = TranslationModel()
             self.embedding = EmbeddingModel()
             self.pos  = PosModel()
+            self.df = self.update_df(name)
+
         else: 
             self.df = self.read_from_csv(name)
 
 
-    def update_df(self):
-        self.df = self.translation.english_of_column(self.df, 'Discription')
-        self.df = self.pos.pos_of_column(self.df)
-        self.df = self.embedding.embed_of_column(self.df)
+    def update_df(self, name: str):
+        df = pd.read_csv(name)
+        df = self.translation.english_of_column(df, 'Discription')
+        df = self.pos.pos_of_column(df)
+        df = self.embedding.embed_of_column(df)
+        return df
 
 
     def save_to_csv(self, file_name):
@@ -43,7 +50,7 @@ class AdoptionDF():
         # Convert back the string representation to arrays
         df_read['embedding'] = df_read['embedding'].apply(lambda x: np.array(eval(x)))
 
-        self.df = df_read
+        return df_read
         
     def get_similarity(self, characteristics_text: str):
         characteristics_output = self.embedding.text_to_embed(characteristics_text)

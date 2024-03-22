@@ -16,6 +16,11 @@ class PosModel():
         self.pipeline = TokenClassificationPipeline(model=model, tokenizer=tokenizer)
   
     def extract_adj(self, text: str):
+        # We extract only adjectives to streamline the paragraph. This is because the paragraph,
+        # which contains information about the dog, may include unrelated sentences.
+        # Users specify their desired characteristics, which are adjectives, so to maintain
+        # consistency, we focus solely on adjectives within the paragraph.
+        
         outputs = self.pipeline(text)
         arr = []
         for word in outputs:

@@ -26,5 +26,5 @@ class TranslationModel():
     
     
     def english_of_column(self, df: pd.DataFrame, col: str):
-            df['english'] = df[col].apply(lambda x: self.he_to_eng(x))
-            return df
+        df['english'] = df[col].apply(lambda x: self.he_to_eng(x))
+        return df
