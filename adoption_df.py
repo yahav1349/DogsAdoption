@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
-from .embedding_model import EmbeddingModel
-from .translation_model import TranslationModel
-from .pos_model import PosModel
+from embedding_model import EmbeddingModel
+from translation_model import TranslationModel
+from pos_model import PosModel
 from sklearn.metrics.pairwise import cosine_similarity
+import pickle as pkl
 
 import warnings
 from transformers import logging
@@ -13,25 +14,49 @@ warnings.simplefilter("ignore")
 
 class AdoptionDF():
     def __init__(self, name: str, initial: bool):
+
         if initial:
             # If there are new adoption dogs available, we'll need to generate a new dataset. 
             # Otherwise, during the current run, we can simply read the CSV file and utilize 
             # its vectors. This initial boolean variable is designed to optimize runtime.
-            
             self.translation = TranslationModel()
             self.embedding = EmbeddingModel()
             self.pos  = PosModel()
             self.df = self.update_df(name)
-
-        else: 
+        else:
+            self.translation, self.embedding, self.pos = self.load_all_models()
             self.df = self.read_from_csv(name)
 
+    def save_all_models(self):
+        self.save_models(self.translation, 'translation')
+        self.save_models(self.embedding, 'embedding')
+        self.save_models(self.pos, 'pos')
+
+    def load_all_models(self):
+        translation = self.load_models('translation')
+        embedding = self.load_models('embedding')
+        pos = self.load_models('pos')
+        return translation, embedding, pos
+
+    def save_models(self, model, name):
+        # Save model as pickle
+        with open(name + "_model.pkl", "wb") as f:
+            pkl.dump(model, f)
+    
+    def load_models(self, name):
+        # Load model from pickle
+        with open(name + "_model.pkl", "rb") as f:
+            model = pkl.load(f)
+
+        return model
 
     def update_df(self, name: str):
         df = pd.read_csv(name)
+        # I picked HERE 5
+        df = df[:5]
         df = self.translation.english_of_column(df, 'Discription')
         df = self.pos.pos_of_column(df)
-        df = self.embedding.embed_of_column(df)
+        df = self.embedding.embed_of_column(df, 'pos')
         return df
 
 
@@ -54,8 +79,10 @@ class AdoptionDF():
         
     def get_similarity(self, characteristics_text: str):
         characteristics_output = self.embedding.text_to_embed(characteristics_text)
-    
-        self.df['similarity_score'] = self.df['embedding'].apply(lambda x: cosine_similarity(characteristics_output, x)[0, 0])
-        self.df.sort_values(by='similarity_score', ascending=False)
         
-        return self.df[:5]
+        similarities_df = self.df.copy()
+
+        similarities_df['similarity_score'] = similarities_df['embedding'].apply(lambda x: cosine_similarity(characteristics_output, x)[0, 0])
+        similarities_df.sort_values(by='similarity_score', ascending=False)
+        
+        return similarities_df[:3]

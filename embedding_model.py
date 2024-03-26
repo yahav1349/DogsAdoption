@@ -11,8 +11,8 @@ warnings.simplefilter("ignore")
 class EmbeddingModel():
     def __init__(self):
         model_name = 'bert-base-uncased'
-        self.embedding_model = BertModel.from_pretrained(model_name)
-        self.embedding_tokenizer = BertTokenizer.from_pretrained(model_name)
+        self.model = BertModel.from_pretrained(model_name)
+        self.tokenizer = BertTokenizer.from_pretrained(model_name)
 
   
     def text_to_embed(self, text: str):
@@ -29,6 +29,7 @@ class EmbeddingModel():
         return output
     
    
-    def embed_of_column(self, df: pd.DataFrame):
-        df['embedding'] = df['pos'].apply(lambda x: self.text_to_embed(x))
+    def embed_of_column(self, df: pd.DataFrame, name: str):
+        df['embedding'] = df[name].apply(lambda x: self.text_to_embed(x))
         return df
+    

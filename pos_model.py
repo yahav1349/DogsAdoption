@@ -10,9 +10,9 @@ warnings.simplefilter("ignore")
 
 class PosModel():
     def __init__(self):
-        model_name = 'QCRI/bert-base-multilingual-cased-pos-english'
-        model = AutoTokenizer.from_pretrained(model_name)
-        tokenizer = AutoModelForTokenClassification.from_pretrained(model_name)
+        model_name = "QCRI/bert-base-multilingual-cased-pos-english"
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForTokenClassification.from_pretrained(model_name)
         self.pipeline = TokenClassificationPipeline(model=model, tokenizer=tokenizer)
   
     def extract_adj(self, text: str):
@@ -39,5 +39,5 @@ class PosModel():
         return adj_str[:-2]
    
     def pos_of_column(self, df: pd.DataFrame):
-        df['pos'] = df['english'].apply(lambda x: self.text_to_embed(x))
+        df['pos'] = df['english'].apply(lambda x: self.extract_adj(x))
         return df
