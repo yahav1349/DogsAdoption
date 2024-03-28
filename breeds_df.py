@@ -2,7 +2,7 @@ import pandas as pd
 from embedding_model import EmbeddingModel
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-import pickle as pkl
+import random
 
 import warnings
 from transformers import logging
@@ -11,50 +11,14 @@ warnings.simplefilter("ignore")
 
 
 class BreedsDF():
-    def __init__(self, name: str, initial: bool):
-        if initial:                    
-            self.embedding = EmbeddingModel()
-            self.df = self.preprocess(name)
-            #### HERE I PICKED 20
-            self.df = self.df[:20]
-        else:
-            self.df = self.read_from_csv(name)
-            self.embedding = self.load_models('embedding')
-    
-    def save_models(self, name):
-        # Save model as pickle
-        with open(name + "_model.pkl", "wb") as f:
-            pkl.dump(self.embedding, f)
-    
-    def load_models(self, name):
-        # Load model from pickle
-        with open(name + "_model.pkl", "rb") as f:
-            model = pkl.load(f)
-
-        return model
-
-    def save_to_csv(self, file_name):
-        # Convert arrays to strings
-        self.df['embedding'] = self.df['embedding'].apply(lambda x: x.tolist())
-
-        # Save DataFrame to CSV file
-        self.df.to_csv(file_name, index=False)
-
-
-    def read_from_csv(self, file_path):
-        # Reading the DataFrame back from CSV
-        df_read = pd.read_csv(file_path)
-
-        # Convert back the string representation to arrays
-        df_read['embedding'] = df_read['embedding'].apply(lambda x: np.array(eval(x)))
-
-        return df_read
-
-
+    def __init__(self, name: str):
+                            
+        self.embedding = EmbeddingModel()
+        self.df = self.preprocess(name)
 
     def preprocess(self, name: str):
         df = pd.read_csv(name)
-        self.mapping_dict = self.columns_map_dict(df)
+        self.category_mapping, self.value_mapping = self.columns_map_dict(df)
         breeds_df = df[['Unnamed: 0', 
                         'temperament', 
                         'max_height', 
@@ -72,7 +36,7 @@ class BreedsDF():
 
         breeds_df['size'] = pd.qcut(breeds_df['max_height'], q=4, labels=False)
 
-        breeds_df['full_vec'] = [np.array(row) for row in breeds_df[['grooming_frequency_value',
+        breeds_df['full_vec'] = [np.array([row]) for row in breeds_df[['grooming_frequency_value',
                                                                 'shedding_value',
                                                                 'energy_level_value',
                                                                 'trainability_value',
@@ -111,25 +75,29 @@ class BreedsDF():
 
         answers_df = answers_df.sort_values(by='final_score', ascending=False)
 
-        return answers_df[:5]
+        return answers_df[:3]
     
     def category_value_mapping(self, column_name, df):
         category_map = {}
-        data = (df[[column_name[:-5]+'category', column_name]].values.tolist())
+        value_map = {}
+        data = (df[[column_name[:-5]+'category', column_name]].dropna().values.tolist())
         unique_data = set(map(tuple, data))
         for value in unique_data:
             category_map[value[1]] = value[0]
-        return category_map
+            value_map[value[0]] = value[1]
+        return category_map, value_map
     
     def columns_map_dict(self, df):
         columns = ['grooming_frequency_value', 'shedding_value','energy_level_value', 'trainability_value', 'demeanor_value']
         category_values_mapping = {}
+        values_catrgory_mapping = {}
         for column in columns:
-            category_values_mapping[column] = self.category_value_mapping(column, df)
+            category_values_mapping[column], values_catrgory_mapping[column] = self.category_value_mapping(column, df)
 
         category_values_mapping['size'] = {0: 'Small', 1: 'Medium', 2: 'Large', 3: 'XL'}
+        values_catrgory_mapping['size'] = {'Small': 0, 'Medium': 1, 'Large': 2, 'XL': 3}
 
-        return category_values_mapping
+        return category_values_mapping, values_catrgory_mapping
     
     def generate_explanation(self, row, answers, mapping_dict):
         explanation = ''
@@ -158,21 +126,31 @@ class BreedsDF():
             temperament_str = ''
 
         explanation += temperament_str[:-2]
-        return explanation
+        explanation = explanation.split(', ')
+
+        random_threes = random.sample(explanation, min(3, len(explanation)))
+
+        final_explanation = ''
+        for item in random_threes:
+            final_explanation += item + ', '
+
+        return final_explanation[:-2]
     
     def explenation(self, df, answers):
-        df['explanation'] = df.apply(lambda x: self.generate_explanation(x, answers, self.mapping_dict), axis=1)
+        df['explanation'] = df.apply(lambda x: self.generate_explanation(x, answers, self.category_mapping), axis=1)
         return df
     
-    def generate_string(self, row):
-        final_string = 'Name: ' + row['Unnamed: 0'] + ', '
-        final_string +=  'Score: ' + str(round(row['final_score'] * 100, 2)) + '%, '
-        final_string += 'Explanation: ' + row['explanation']
-        return final_string
-
-
+    def generate_dict(self, dog_df):
+        dog_dict = {}
+        dog_dict['Name'] = dog_df['Unnamed: 0']
+        dog_dict['Score'] =  str(round(dog_df['final_score'] * 100, 2)) + '%'
+        dog_dict['Discription'] = dog_df['explanation']
+        return dog_dict  
+    
     def get_final_answers(self, answers):
         answers_df = self.survey_answers(answers)
         answers_df = self.explenation(answers_df, answers)
-        answers_output = answers_df.apply(lambda x: self.generate_string(x), axis=1)
-        return answers_output
+        relevant_dicts = []
+        for i in range(len(answers_df)):
+            relevant_dicts.append(self.generate_dict(answers_df.iloc[i]))
+        return relevant_dicts

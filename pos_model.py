@@ -36,6 +36,9 @@ class PosModel():
             adj_str += adj
             adj_str += ', '
         
+        if adj_str == '':
+            return 'Noise'
+        
         return adj_str[:-2]
    
     def pos_of_column(self, df: pd.DataFrame):
