@@ -1,20 +1,28 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-import os
+from webdriver_manager.chrome import ChromeDriverManager  # This package automatically downloads and installs the latest ChromeDriver
 
-class Driver(webdriver.Chrome):
-    DRIVER_NAME: str = 'chromedriver.exe'
-
+class Driver:
     def __init__(self):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--log-level=3')
-        service = Service(self.DRIVER_NAME)
+        chrome_options.add_argument('--headless')  # Run Chrome in headless mode (without opening a browser window)
+        chrome_options.add_argument('--log-level=3')  # Set log level to suppress unnecessary warnings
 
-        super(Driver, self).__init__(service=service, options=chrome_options)
+        # Use ChromeDriverManager to automatically download and install the latest ChromeDriver
+        service = Service(ChromeDriverManager().install())
 
-    @property
-    def driver_path(self):
-        return os.path.join(__file__[:__file__.find('src')], self.DRIVER_NAME)
-        # return os.path.join(os.path.dirname(os.path.abspath(__file__)), self.DRIVER_NAME)
+        # Initialize Chrome WebDriver with configured options and service
+        self.driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    def get(self, link: str):
+        self.driver.get(link)
+
+    def find_element(self, *args, **kwargs):
+        return self.driver.find_element(*args, **kwargs)
+
+    def find_elements(self, *args, **kwargs):
+        return self.driver.find_elements(*args, **kwargs)
+    
+    def quit(self): 
+        self.driver.quit()
