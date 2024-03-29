@@ -4,7 +4,7 @@
     import dogBone from './dogBone.png';
     import Pagination from 'react-bootstrap/Pagination';
     import 'bootstrap/dist/css/bootstrap.css'; 
-    import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+    import WarningAmberIcon from '@mui/icons-material/WarningAmber';
     import LinearProgress from '@mui/material/LinearProgress';
     import Autocomplete from '@mui/material/Autocomplete';
     import TextField from '@mui/material/TextField';
@@ -15,8 +15,6 @@
     import { styled } from '@mui/system';
     import Backdrop from '@mui/material/Backdrop';
     import CircularProgress from '@mui/material/CircularProgress';
-    import { Link } from 'react-router-dom';
-    import PageTwo from './pageTwo.jsx';
     import { useNavigate } from 'react-router-dom';
 
 
@@ -51,7 +49,7 @@
                     .catch(error => {
                         console.error('Error:', error);
                     });
-            }, 500);
+            }, 4000);
 
             return () => {
                 clearTimeout(timeoutId);
@@ -111,7 +109,7 @@
     const cardElevation = showButton ? 0 : 20;
 
     const cardSx = {
-            height: 380,
+            height: 420,
             width: 700,
             marginTop: '10px',
             overflowY: 'auto',
@@ -225,155 +223,144 @@
             }
         }
 
-        const handlePrevQuestion = () => {
-            if (stage > 0) {
-                setStage(prevStage => prevStage - 1);
-                setAnswers(prevAnswers => prevAnswers.slice(0, -1));
-            }
+
+    const handlePrevQuestion = () => {
+        if (stage > 0) {
+            setStage(prevStage => prevStage - 1);
+            setAnswers(prevAnswers => prevAnswers.slice(0, -1));
         }
-
-        return (
-            <div className='startQuiz'>
-            {}
-            <Card size="lg" elevation={cardElevation} alignItems='center' sx={cardSx}>
-                {showButton &&
-                <>
-                <Typography variant="h3" className='quizTitle' style={{ marginBottom: '0px', textAlign: 'center', fontWeight: 'bold', fontStyle:
-                    'italic' , color: 'rgb(150, 45, 23)' }}>
-                    Discover Your Perfect Companion Today!
-                </Typography>
-                <Typography variant="h6" style={{ marginBottom: '100px', textAlign: 'center', color: '#666' }}>
-                    Take our fun quiz and find your ideal furry friend today!
-                </Typography>
-                <Button
-                style={{
-                    width: "200px", // Set the width of the     
-                    height: "100px", // Set the height of the button
-                    backgroundImage: `url(${dogBone})`, 
-                    backgroundSize: "cover", // Ensure the background image covers the entire button
-                    border: "none", // Remove default button border
-                    cursor: "pointer", // Change cursor to indicate interactivity
-                    backgroundColor: "transparent",
-                    color: 'black',
-                    fontWeight: 'bold',
-                    marginLeft: "250px",
-                    fontFamily: 'halvetica',
-                }}
-
-                //starting the quiz
-                variant="outlined" onClick={onStartQuizClick} className='startButton'>
-                    Start Quiz
-                </Button>
-                </>
-                }
-                {!showButton && stage < Object.keys(Constants.questions).length &&
-                <>
-                    <Typography variant="h4"  className='quizTitle'  
-                        style={{fontFamily:'cursive',color: 'black',
-                        fontSize:'30px', marginBottom:'30px' }}>
-                        {Object.entries(Constants.questions)[stage][0]}
-                    </Typography>
-
-                    {/* moving to the next question */}
-                    {Object.entries(Constants.questions)[stage][1].map((answer, index) => (
-                        <Button variant="text" 
-                            style={{
-                                width: "300px", // Set the width of the button
-                                height: "30px", // Set the height of the button
-                                // backgroundColor: "rgb(255, 222, 124)",
-                                border: "solid 2px black", // Add a solid border to the button
-                                borderColor: 'rgb(180, 45, 23)' , 
-                                marginTop: "8px",
-                                textAlign: "center",
-                                marginLeft: "200px",
-                                borderRadius: "40px",
-                                color: 'rgb(180, 45, 23)',
-                                fontSize: '16px'
-                            }}
-                            onClick={() => handleNextQuestion(answer)} className='answerButton' key={index}>
-                            {answer}
-                        </Button>
-                        
-                    ))}
-                    {stage > 0 && stage < Object.keys(Constants.questions).length - 1 && <>
-                        <LinearColor progress={(stage / Object.keys(Constants.questions).length) * 100} />
-                    </>}
-
-                    {stage === Object.keys(Constants.questions).length - 1 &&
-                    <>
-                        <CharacterSelect />
-                        {/* <SelectedCharacteristicsList selectedCharacteristics={selectedCharacteristics} /> */}
-                        <LinearColor progress={(stage / Object.keys(Constants.questions).length) * 100} />
-                        {/* <Pagination>
-                        <Pagination.Next 
-                                className="custom-next-btn"
-                                onClick={handleNextQuestion}
-                                alignItems='center'
-                                style={{marginLeft: "300px", marginTop: "20px", backgroundColor:'blue'}}>
-                                {<span aria-hidden="true">Cofirm</span>}
-                            </Pagination.Next>
-                            </Pagination> */}
-                            <TButton onClick={handleNextQuestion}> Contuinue </TButton>
-                            </>}
-                    
-                {/* going back to the previous question */}
-                {stage > 0 &&
-                <Pagination>
-                        <Pagination.Prev 
-                                className="custom-prev-btn"
-                                onClick={handlePrevQuestion}
-                                alignItems='center'
-                                style={{marginLeft: "50px"}}>
-                    {<span aria-hidden="true">Previous</span>}
-                </Pagination.Prev>
-                    </Pagination>
-                    }
-                {/* </Card> */}
-                </>
-                
-                }
-                {/* finish quiz */}
-                {stage === Object.keys(Constants.questions).length &&                
-                <>
-                
-                    <Backdrop
-                        sx={{ 
-                            color: '#fff', 
-                            zIndex: (theme) => theme.zIndex.drawer + 1,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'space-evenly',
-                            backdropFilter: 'blur(6px)', // Add this line
-                        }}
-                        open={true}
-                    >
-                        <Typography  variant="h4" textAlign='center' sx={{fontSize:'42px', fontWeight:'bold'}}>
-                        Congratulations on completing the quiz!
-                        </Typography>
-                        <br /> <br />
-                        <CircularProgress sx={{color: "red"}}></CircularProgress>
-                        <Typography variant="caption" textAlign='center' sx={{ fontSize:'25px', color: "red", wordWrap: 'break-word', width: '100ch' }}>
-                        Adopting a dog is a wonderful and fulfilling experience.
-                        When you adopt a dog, you are giving them a second chance at life and providing them with a loving home. 
-                        Dogs make great companions and can bring so much joy and happiness to your life. 
-                        By adopting, you are also helping to reduce the number of dogs in shelters and giving them a chance to find a forever home.
-                        It's important to consider factors such as the dog's breed, size, and temperament to ensure a good match for your lifestyle.
-                        Remember, adopting a dog is a lifelong commitment, but the love and loyalty you receive in return are priceless
-                        </Typography>
-                        {/* <Typography  paragraph textAlign='center' sx={{fontSize:'20px'}}>
-                        By clicking on the button below, you will be redirected to the results page.
-                        </Typography> */}
-                        {/* <div style={{ textAlign: 'center' }}>
-                            <CheckCircleIcon sx={{ fontSize: 70, color:'green', marginTop:'40px' }} ></CheckCircleIcon>
-                                 onClick ={() => navigation.navigate('./PageTwo') }
-                        </div> */}
-                    </Backdrop>
-                </>
-                }
-            </Card>  
-        </div>
-        )
     }
 
-    export default Quiz;
+    return (
+        <div className='startQuiz'>
+        {}
+        <Card size="lg" elevation={cardElevation} alignItems='center' sx={cardSx}>
+            {showButton &&
+            <>
+            <Typography variant="h3" className='quizTitle' style={{ marginBottom: '0px', textAlign: 'center', fontWeight: 'bold', fontStyle:
+                'italic' , color: 'rgb(150, 45, 23)' }}>
+                Discover Your Perfect Companion Today!
+            </Typography>
+            <Typography variant="h6" style={{ marginBottom: '100px', textAlign: 'center', color: '#666' }}>
+                Take our fun quiz and find your ideal furry friend today!
+            </Typography>
+            <Button
+            style={{
+                width: "200px", // Set the width of the     
+                height: "100px", // Set the height of the button
+                backgroundImage: `url(${dogBone})`, 
+                backgroundSize: "cover", // Ensure the background image covers the entire button
+                border: "none", // Remove default button border
+                cursor: "pointer", // Change cursor to indicate interactivity
+                backgroundColor: "transparent",
+                color: 'black',
+                fontWeight: 'bold',
+                marginLeft: "250px",
+                fontFamily: 'halvetica',
+            }}
+
+            //starting the quiz
+            variant="outlined" onClick={onStartQuizClick} className='startButton'>
+                Start Quiz
+            </Button>
+            </>
+            }
+            {!showButton && stage < Object.keys(Constants.questions).length &&
+            <>
+                <Typography variant="h4"  className='quizTitle'  
+                    style={{fontFamily:'cursive',color: 'black',
+                    fontSize:'28px', marginBottom:'30px', textAlign:'center' }}>
+                    {Object.entries(Constants.questions)[stage][0]}
+                </Typography>
+
+                {/* moving to the next question */}
+                {Object.entries(Constants.questions)[stage][1].map((answer, index) => (
+                    <Button variant="text" 
+                        style={{
+                            width: "300px", // Set the width of the button
+                            height: "30px", // Set the height of the button
+                            // backgroundColor: "rgb(255, 222, 124)",
+                            border: "solid 2px black", // Add a solid border to the button
+                            borderColor: 'rgb(180, 45, 23)' , 
+                            marginTop: "8px",
+                            textAlign: "center",
+                            marginLeft: "200px",
+                            borderRadius: "40px",
+                            color: 'rgb(180, 45, 23)',
+                            fontSize: '16px'
+                        }}
+                        onClick={() => handleNextQuestion(answer)} className='answerButton' key={index}>
+                        {answer}
+                    </Button>
+                    
+                ))}
+                {stage > 0 && stage < Object.keys(Constants.questions).length - 1 && <>
+                    <LinearColor progress={(stage / Object.keys(Constants.questions).length) * 100} />
+                </>}
+
+                {stage === Object.keys(Constants.questions).length - 1 &&
+                <>
+                    <CharacterSelect />
+                    <LinearColor progress={(stage / Object.keys(Constants.questions).length) * 100} />
+                        <TButton onClick={handleNextQuestion}> Continue </TButton>
+                        </>}
+                
+            {/* going back to the previous question */}
+            {stage > 0 &&
+            <Pagination>
+                    <Pagination.Prev 
+                            className="custom-prev-btn"
+                            onClick={handlePrevQuestion}
+                            alignItems='center'
+                            style={{marginLeft: "50px"}}>
+                {<span aria-hidden="true">Previous</span>}
+            </Pagination.Prev>
+                </Pagination>
+                }
+            {/* </Card> */}
+            </>
+            
+            }
+            {/* finish quiz */}
+            {stage === Object.keys(Constants.questions).length &&                
+            <>
+            
+                <Backdrop
+                    sx={{ 
+                        color: '#fff', 
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'space-evenly',
+                        backdropFilter: 'blur(10px)', 
+                        padding: '20px',
+                    }}
+                    open={true}
+                >
+                    <Typography  variant="h4" textAlign='center' sx={{fontSize:'42px', fontWeight:'bold'}}>
+                    Congratulations on completing the quiz!
+                    </Typography>
+                    <br /> <br />
+                    <CircularProgress sx={{color: "red"}}></CircularProgress>
+
+                    <Typography variant="caption" textAlign='center' sx={{ fontSize:'35px', color: "red", wordWrap: 'break-word',
+                     backgroundColor:'black'}}>
+                    <WarningAmberIcon style={{color: 'red', fontSize: '120px '}}/>
+                    <br /> <br />
+                    Choosing to adopt a dog means offering a lifeline to 
+                    a deserving soul.<br/> Without adoption, many dogs face
+                     uncertain fates, including the heartbreaking reality of euthanasia.<br/>
+                     Your decision to adopt saves lives and brings immeasurable joy and love into both your life and theirs.
+                     <br/><br/>
+                     Pleas consider adopting a dog from a shelter or rescue organization.
+                    </Typography>
+                </Backdrop>
+            </>
+            }
+        </Card>  
+    </div>
+    )
+}
+
+export default Quiz;

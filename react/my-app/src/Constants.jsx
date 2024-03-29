@@ -1,7 +1,3 @@
-import React from 'react';
-import { Button as BaseButton } from '@mui/base/Button';
-import { styled } from '@mui/system';
-
 export const characteristics = [
     {label: 'Friendly'}, 
     {label: 'Energetic'},
@@ -12,34 +8,47 @@ export const characteristics = [
 ]
    
 export const questions = {
-    "How much time can you spend with your dog?": [
-        "I'm always at home",
-        "I'm working from home",
-        "I'm working outside",
-        "I'm always outside", 
-        "I'm always traveling"
+    'How much grooming would you enjoy doing?': [
+        'Occasional Bath/Brush',
+        'Weekly Brushing',
+        '2-3 Times a Week Brushing',
+        'Daily Brushing',
+        'Specialty/Professional'
     ],
-    "What size of dog do you prefer?": [
-        "Small",
-         "Medium",
-        "Large",
-        "Extra large",
-        "I don't care"
+    'How much shedding are you prepared for your dog to have?':[
+        'Infrequent',
+        'Occasional',
+        'Seasonal',
+        'Regularly',
+        'Frequent'
     ],
-    'What is your living situation?': [
-        'Apartment',
-        'House',
-        'Farm',
-        'I am homeless',
-        'I live in a van'
+    'Please select the amount of exercise your new companion requires:':[
+        'Couch Potato',
+        'Calm',
+        'Regular Exercise',
+        'Energetic',
+        'Needs Lots of Activity'
     ],
-    'What is your activity level?': [
-        'Low',
+    'How trainable do you prefer your dog to be?':[
+        'May be Stubborn',
+        'Independent',
+        'Agreeable',
+        'Easy Training',
+        'Eager to Please'
+    ],
+    'How would you like you dog to react to strangers and other pets?':[
+        'Aloof/Wary',
+        'Reserved with Strangers',
+        'Alert/Responsive',
+        'Friendly',
+        'Outgoing'
+    ],
+    'What size you wish your next best friend to be?':[
+        'Small',
         'Medium',
-        'High',
-        'Very high',
-        'I am a couch potato'
+        'Large',
+        'XL'
     ],
-    'Choose your wanted characteristics':[],    
+    'Choose the desired characteristics of the dog:':[],    
 }
 

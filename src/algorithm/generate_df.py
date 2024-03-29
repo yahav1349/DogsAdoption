@@ -4,7 +4,7 @@ from adoption_df import AdoptionDF
 
 class FinalModel():
 
-    def __init__(self, initial):
+    def __init__(self, initial=False):
         if initial:
             self.adoption_df = AdoptionDF('dogs.csv')
             self.breeds_df = BreedsDF('akc-data-latest.csv')
