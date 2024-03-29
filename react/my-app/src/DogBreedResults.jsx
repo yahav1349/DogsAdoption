@@ -7,24 +7,24 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import EyeButton from './EyeButton';
 
 //Will get do1 1, score 1, text 1, do2 2, score 2, text 2, do3 3, score 3, text 3
-const DogBreedResultes = ({score_2, text}) => {
+const DogBreedResultes = ({breed_0, breed_1, breed_2}) => {
     return(
     <div className='leftContent'>
     <div className='numberOne'>
-                <Card size="lg" elevation={5}  className='result-card' sx={{maxHeight:200, marginLeft:'5px'}} >
+                <Card size="lg" elevation={5}  className='result-card' sx={{Height:200, marginLeft:'5px'}} >
                     <div className='result-card-name'>
-                        <Typography variant='h1' fontSize='50px' color='gold' sx={{marginLeft:'5px'}}  >
-                                <FaTrophy style={{color:'gold'}}/> Pitbul
+                        <Typography variant='h1' fontSize='40px' color='gold' sx={{marginLeft:'5px'}}  >
+                                <FaTrophy style={{color:'gold'}}/> {breed_0.Name}
                                 <br/> <br/>
                         </Typography>
-                        <Typography variant='h1' fontSize='30px' color='gold' sx={{marginLeft:'10px'}}>
-                            score: {score_2}%
+                        <Typography variant='h1' fontSize='25px' color='gold' sx={{marginLeft:'10px'}}>
+                            score: {breed_0.Score}
                         </Typography>
                     </div>
 
                     <div className='result-card-explain'>
                         <div className='reasons'>
-                            <EyeButton text={text} color='gold' size='20px'/>
+                            <EyeButton text={breed_0.Discription} color='gold' size='16px'/>
                         </div>
                         <div className='card-icons'>
                             <Tooltip title="The score represent the match score between the dog breed and your answers in the quiz" 
@@ -41,17 +41,17 @@ const DogBreedResultes = ({score_2, text}) => {
             <div className='numberTwo'>
                 <Card size="lg" elevation={5} className='result-card'  sx={{marginLeft:'5px'}}>
                     <div className='result-card-name'>
-                        <Typography variant='h1' fontSize='40px' color='silver' sx={{marginLeft:'2px'}} >
-                            <LiaMedalSolid style={{color:'silver'}}/> Pudel
+                        <Typography variant='h1' fontSize='36px' color='silver' sx={{marginLeft:'2px'}} >
+                            <LiaMedalSolid style={{color:'silver'}}/> {breed_1.Name}
                             <br/> <br/>
                         </Typography>
-                        <Typography variant='h1' fontSize='25px' color='silver'  sx={{marginLeft:'10px'}}>
-                            score: 60%
+                        <Typography variant='h1' fontSize='20px' color='silver'  sx={{marginLeft:'10px'}}>
+                            score: {breed_1.Score}
                         </Typography>
                     </div>
                     <div className='result-card-explain'>
                         <div className='reasons'>
-                            <EyeButton text={text} color='silver' size='18px'/>
+                            <EyeButton text={breed_1.Discription} color='silver' size='14px'/>
                         </div>
                         <div className='card-icons'>
                             <Tooltip title="The score represent the match score between the dog breed and your answers in the quiz" 
@@ -68,16 +68,16 @@ const DogBreedResultes = ({score_2, text}) => {
         <Card size="lg" elevation={5} className='result-card' sx={{marginLeft:'5px'}}>
             <div className='result-card-name'>
                 <Typography variant='h1' fontSize='28px' color='#CD7F32' className='result-card-name'>
-                    <LiaMedalSolid style={{color:'#CD7F32'}}/> Rottweiler
+                    <LiaMedalSolid style={{color:'#CD7F32'}}/> {breed_2.Name}
                     <br/> <br/>
                 </Typography>
                 <Typography variant='h1' fontSize='20px' color='#CD7F32'   sx={{marginLeft:'10px'}}>
-                    score: 60%
+                    score: {breed_2.Score}
                 </Typography>
             </div>
             <div className='result-card-explain'>
                 <div className='reasons'>
-                    <EyeButton text={text} color='#CD7F32' size='16px'/>
+                    <EyeButton text={breed_2.Discription} color='#CD7F32' size='12px'/>
                 </div>
                 <div className='card-icons'>
                     <Tooltip title="The score represent the match score between the dog breed and your answers in the quiz" 

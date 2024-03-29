@@ -1,12 +1,8 @@
 import './App.css';
 import React from 'react';
-import { FaTrophy } from "react-icons/fa";
-import { LiaMedalSolid } from "react-icons/lia";
 import { Card, Typography, Divider,Button, Tooltip} from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import VisibilityOffTwoToneIcon from '@mui/icons-material/VisibilityOffTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 
 
@@ -23,7 +19,7 @@ const EyeButton = ({text, color, size}) => {
   return (
       <div className='eye-button' onClick={handleClick}>
           <div className='eye-icon'>
-          <Tooltip title="Click to see why this dog is good for you" 
+          <Tooltip title="Click to see why this dog is such a good match for you!" 
                           arrow>
               {isOpen ? 
                   <VisibilityOffTwoToneIcon style={{fontSize: '24px'}} /> :
@@ -38,7 +34,7 @@ const EyeButton = ({text, color, size}) => {
 
               <div className='eye-text'>
                   <Typography variant='h1' fontSize={size} color='black' >
-                  We chose this dog breed for you because it is: 
+                  What makes this dog breed perfect for you?
                   <br/>
                   </Typography>
                   <Divider sx={{ width: '250px',height:'4px', margin: '10px auto', backgroundColor: color }} />

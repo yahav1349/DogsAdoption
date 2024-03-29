@@ -26,13 +26,13 @@ const ExpandMore = styled((props) => {
 const AdoptMeButton = ({dog}) => {
     const handleAdoptClick = () => {
       // Replace 'https://your-website-url.com' with the actual website URL
-      window.open(dog.link, '_blank');
+      window.open(dog.Link, '_blank');
     };
   
     return (
       <IconButton aria-label="Adopt Me" onClick={handleAdoptClick}>
         <Stack direction="column" alignItems="center">
-          <PetsIcon />
+          <PetsIcon style={{color:'red'}}/>
           <Typography variant="caption">Adopt Me</Typography>
         </Stack>
       </IconButton>
@@ -52,14 +52,14 @@ export default function AddoptionCard({dog}) {
     <Card sx={{ maxWidth: 345, maxHeight: 500, overflow: 'auto'}}>
       <CardHeader
         title= {dog.Name}
-        subheader={dog.breed}
+        subheader={dog.Breed}
         titleTypographyProps={{ fontSize: '20px' }}
         subheaderTypographyProps={{ fontSize: '12px' }}
       />
       <CardMedia
         component="img"
         height="120"
-        src={dog.img}
+        src={dog.Image}
         alt="Paella dish"
       />
       <CardActions disableSpacing>
@@ -78,7 +78,7 @@ export default function AddoptionCard({dog}) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent style={{ paddingTop: 0, paddingBottom:0 }}>
           <Typography paragraph>
-            {dog.text}
+            {dog.Discription}
           </Typography>
         </CardContent>
       </Collapse>
