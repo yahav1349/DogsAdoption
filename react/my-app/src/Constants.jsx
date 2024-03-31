@@ -1,11 +1,38 @@
 export const characteristics = [
-    {label: 'Friendly'}, 
-    {label: 'Energetic'},
     {label: 'Loyal'},
+    {label: 'Friendly'},
     {label: 'Intelligent'},
+    {label: 'Affectionate'},
+    {label: 'Smart'},
+    {label: 'Alert'},
     {label: 'Playful'},
-    {label: 'Affectionate'}
-]
+    {label: 'Independent'},
+    {label: 'Confident'},
+    {label: 'Gentle'},
+    {label: 'Courageous'},
+    {label: 'Lively'},
+    {label: 'Charming'},
+    {label: 'Bright'},
+    {label: 'Outgoing'},
+    {label: 'Dignified'},
+    {label: 'Calm'},
+    {label: 'Devoted'},
+    {label: 'Active'},
+    {label: 'Energetic'},
+    {label: 'Fearless'},
+    {label: 'Happy'},
+    {label: 'Good-Natured'},
+    {label: 'Agile'},
+    {label: 'Curious'},
+    {label: 'Spirited'},
+    {label: 'Inquisitive'},
+    {label: 'Even-Tempered'},
+    {label: 'Versatile'},
+    {label: 'Patient'},
+    {label: 'Brave'},
+    {label: 'Bold'},
+    {label: 'Sensitive'},
+    {label: 'Noble'}]
    
 export const questions = {
     'How much grooming would you enjoy doing?': [

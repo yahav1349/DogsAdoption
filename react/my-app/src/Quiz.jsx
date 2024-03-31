@@ -338,22 +338,29 @@
                     }}
                     open={true}
                 >
-                    <Typography  variant="h4" textAlign='center' sx={{fontSize:'42px', fontWeight:'bold'}}>
+                    <Typography  variant="h4" textAlign='center' sx={{fontSize:'42px', fontWeight:'bold', textShadow: '5px 5px 5px black'}}>
                     Congratulations on completing the quiz!
+                    <br/><br/>
+                    
+                    <LinearProgress sx={{'& .MuiLinearProgress-bar': {backgroundColor: 'red'}, width: '100%',padding: '5px'}}></LinearProgress>
+                    <Typography textAlign='center'> Loading </Typography>
                     </Typography>
                     <br /> <br />
-                    <CircularProgress sx={{color: "red"}}></CircularProgress>
+                    
 
-                    <Typography variant="caption" textAlign='center' sx={{ fontSize:'35px', color: "red", wordWrap: 'break-word',
-                     backgroundColor:'black'}}>
+                    <Typography variant="caption" textAlign='center' sx={{ fontSize:'25px', color: "rgb(255,255,255)", wordWrap: 'break-word',
+                     backgroundColor:'rgb(69, 67, 65)'}}>
                     <WarningAmberIcon style={{color: 'red', fontSize: '120px '}}/>
-                    <br /> <br />
+                    <br/>On the upcoming page, you'll find dogs available for adoption as well as breeds that match<br />
+                    your preferences.
+                    Our system has analyzed your desired dog characteristics and selected dogs<br />
+                    for adoption accordingly.
                     Choosing to adopt a dog means offering a lifeline to 
-                    a deserving soul.<br/> Without adoption, many dogs face
+                    a deserving soul.<br/> <br /> Without adoption, many dogs face
                      uncertain fates, including the heartbreaking reality of euthanasia.<br/>
                      Your decision to adopt saves lives and brings immeasurable joy and love into both your life and theirs.
                      <br/><br/>
-                     Pleas consider adopting a dog from a shelter or rescue organization.
+                     Please consider adopting a dog from a shelter or rescue organization.
                     </Typography>
                 </Backdrop>
             </>

@@ -6,6 +6,13 @@ import dog1 from './dog1.jpg'
 import dog2 from './dog2.jpg'
 import dog3 from './dog3.jpeg'
 import dog4 from './dog4.jpg'
+import dog5 from './dog5.jpg'
+import dog6 from './dog6.jpg'
+import dog7 from './dog7.jpg'
+import dog8 from './dog8.jpg'
+import dog9 from './dog9.jpg'
+import dog10 from './dog10.jpg'
+import dog11 from './dog11.jpg'
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -15,19 +22,40 @@ import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 const HappyClientsText = [
     "My daughter was so happy when we gave her the dog we found in this website, she is so happy now!",
     "We are so grateful we found this website and gave our daughter her beloved dog, she is so happy now and we are too",
-    "Our dog is so happy and we are too, we are so grateful for this website"
+    "Our dog is so happy and we are too, we are so grateful for this website",
+    "Growing up, I always dreamed of having a furry companion to call my own. When I stumbled upon this website, it felt like fate. Now, with our beloved dog Luna, our family feels complete.",
+    "Luna brought hope back into our home. Watching our kids grow alongside her is priceless.",
+    "Bringing home our new dog felt like fate. He's brought healing and joy into our lives.",
+    "Adopting Charlie taught our kids compassion and empathy. His presence reaffirms the power of love.",
+    "Buddy may be a senior, but his zest for life fills our home with warmth and laughter.",
+    "Bailey isn't just a pet; he's a best friend to our kids. His comforting presence is invaluable.",
+    "Rosie's bond with our special-needs child is miraculous. Her patience and love provide comfort beyond words."
 ]
 
 const HappyClientsPictures = [
     dog2,
     dog3,
-    dog4
+    dog4,
+    dog5,
+    dog7,
+    dog6,
+    dog8,
+    dog9,
+    dog10,
+    dog11
 ]
 
 const happyClientsTitle = [
     'Aviv, 30',
     'Jena, 25',
-    'Yael, 40'
+    'Yael, 40',
+    'Eli, 36',
+    'Dani, 43',
+    'Tom, 57',
+    'Sarah, 49',
+    'Aliza, 63',
+    'Rachel, 37',
+    'David, 47'
 ]
 
 const LikeButton = ({ photoIndex }) => {
@@ -62,7 +90,7 @@ const HappyClients = () => {
     const [openedCard, setOpenedCard] = React.useState(0);
     React.useEffect(() => {
         const interval = setInterval(() => {
-            setOpenedCard(prevCard => (prevCard + 1) % 3);
+            setOpenedCard(prevCard => (prevCard + 1) % 10);
         }, 5000);
 
         return () => {
