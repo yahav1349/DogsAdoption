@@ -12,22 +12,25 @@ warnings.simplefilter("ignore")
 
 class AdoptionDF():
     def __init__(self, name: str):
-        self.translation = TranslationModel()
         self.embedding = EmbeddingModel()
-        self.pos  = PosModel()
         self.df = self.update_df(name)
 
     def update_df(self, name: str):
         df = pd.read_csv(name)
-        df = self.translation.english_of_column(df, 'Discription')
-        df = self.pos.pos_of_column(df)
+        translation = TranslationModel()
+        pos  = PosModel()
+        df = translation.english_of_column(df, 'Discription')
+        df = pos.pos_of_column(df)
         df = self.embedding.embed_of_column(df, 'pos')
         return df
         
-    def get_similarity(self, characteristics_text: str):
+    def get_similarity(self, characteristics_text: str, size):
         characteristics_output = self.embedding.text_to_embed(characteristics_text)
         
         similarities_df = self.df.copy()
+        mapping = {'קטן': 0, 'בינוני': 1, 'גדול': 2}
+        similarities_df['Num_Size'] = similarities_df['Size'].map(mapping)
+        similarities_df = similarities_df[similarities_df['Num_Size'] == size]
 
         similarities_df['similarity_score'] = similarities_df['embedding'].apply(lambda x: cosine_similarity(characteristics_output, x)[0, 0])
         similarities_df = similarities_df.sort_values(by='similarity_score', ascending=False)
@@ -43,8 +46,8 @@ class AdoptionDF():
         dog_dict['Discription'] = dog_df['Discription']
         return dog_dict
 
-    def get_results(self, characteristics_text: str):
-        relevant_df = self.get_similarity(characteristics_text)
+    def get_results(self, characteristics_text: str, size):
+        relevant_df = self.get_similarity(characteristics_text, size)
         relevant_dicts = []
         for i in range(len(relevant_df)):
             relevant_dicts.append(self.get_dog_dict(relevant_df.iloc[i]))

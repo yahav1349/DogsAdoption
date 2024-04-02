@@ -26,6 +26,7 @@ app.add_middleware(
 )
 @app.post("/api/quiz")
 async def handle_post_request(request_data: dict = Body(...)):
+    print('got here test')
     model = usual_run()
     model_results = model.get_final_results(request_data)
 

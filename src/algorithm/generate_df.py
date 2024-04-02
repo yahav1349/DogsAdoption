@@ -29,7 +29,8 @@ class FinalModel():
         return self.breeds_df.get_final_answers(answers)
     
     def get_adoption_results(self, answers):
-        return self.adoption_df.get_results(answers['temperament'])
+        size = min(2, answers['size'])
+        return self.adoption_df.get_results(answers['temperament'], size)
     
     def construct_answers_as_requiered(self, input):
         answers = {}
