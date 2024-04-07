@@ -42,7 +42,7 @@ const PageTwo = ({ response }) => {
                     marginTop: '50px',
                     position: 'absolute',
                     top: 50,
-                    left: 679,
+                    left: 760,
                     color: 'black',
                     marginBottom: '20px',
                     fontWeight: 'bold',

@@ -25,13 +25,16 @@ class AdoptionDF():
         return df
         
     def get_similarity(self, characteristics_text: str, size):
-        characteristics_output = self.embedding.text_to_embed(characteristics_text)
-        
+
         similarities_df = self.df.copy()
         mapping = {'קטן': 0, 'בינוני': 1, 'גדול': 2}
         similarities_df['Num_Size'] = similarities_df['Size'].map(mapping)
         similarities_df = similarities_df[similarities_df['Num_Size'] == size]
-
+        
+        if characteristics_text == 'Stam':
+            return similarities_df[:3]
+        
+        characteristics_output = self.embedding.text_to_embed(characteristics_text)
         similarities_df['similarity_score'] = similarities_df['embedding'].apply(lambda x: cosine_similarity(characteristics_output, x)[0, 0])
         similarities_df = similarities_df.sort_values(by='similarity_score', ascending=False)
         

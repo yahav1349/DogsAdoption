@@ -49,7 +49,7 @@
                     .catch(error => {
                         console.error('Error:', error);
                     });
-            }, 4000);
+            }, 2000);
 
             return () => {
                 clearTimeout(timeoutId);
@@ -350,13 +350,16 @@
 
                     <Typography variant="caption" textAlign='center' sx={{ fontSize:'25px', color: "rgb(255,255,255)", wordWrap: 'break-word',
                      backgroundColor:'rgb(69, 67, 65)'}}>
-                    <WarningAmberIcon style={{color: 'red', fontSize: '120px '}}/>
                     <br/>On the upcoming page, you'll find dogs available for adoption as well as breeds that match<br />
                     your preferences.
                     Our system has analyzed your desired dog characteristics and selected dogs<br />
                     for adoption accordingly.
+                    <br/>
                     Choosing to adopt a dog means offering a lifeline to 
-                    a deserving soul.<br/> <br /> Without adoption, many dogs face
+                    a deserving soul.<br/>
+                    <WarningAmberIcon style={{color: 'red', fontSize: '120px '}}/>
+                    <br/>
+                    Without adoption, many dogs face
                      uncertain fates, including the heartbreaking reality of euthanasia.<br/>
                      Your decision to adopt saves lives and brings immeasurable joy and love into both your life and theirs.
                      <br/><br/>

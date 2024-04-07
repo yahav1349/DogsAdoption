@@ -42,10 +42,14 @@ class FinalModel():
             if i < 6:
                 answers[keys_mapping[key]] = self.breeds_df.value_mapping[keys_mapping[key]][input[key]]
         char_str = ''
-        for cha_dict in input['selectedCharacteristics']:
-            char_str += cha_dict['label'] + ', '
-        
-        char_str = char_str[:-2]
+
+        if len(input['selectedCharacteristics']) == 0:
+            char_str = 'Stam'
+        else:
+            for cha_dict in input['selectedCharacteristics']:
+                char_str += cha_dict['label'] + ', '
+            
+            char_str = char_str[:-2]
 
         answers['temperament'] = char_str
 
