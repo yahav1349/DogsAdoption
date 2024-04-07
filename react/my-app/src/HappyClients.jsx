@@ -106,8 +106,8 @@ const HappyClients = () => {
                                                     borderRadius:'2%'}}>
                 <Typography variant='h5' className='happyClientsTitle' 
                 style={{ marginBottom: '0px', textAlign: 'center'
-                , color: 'rgb(60, 45, 23)' }}>
-                     Join today to over 1000+ happy clients!
+                , color: 'rgb(100, 45, 23)' , fontWeight: "bold"}}>
+                     Join today to over 1000 happy clients!
                 </Typography>
                 <Divider sx={{ margin: '20px auto' }}></Divider>
                 <CardMedia
