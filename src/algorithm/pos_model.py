@@ -50,7 +50,7 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
 class PosModel():
     def __init__(self):
-        genai.configure(api_key='AIzaSyDjSipvdodhIlXeXB_rhSMCpHiR57nkAEA')
+        genai.configure(api_key='Your_API_Key')
         safety_ratings  = {
                 HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
